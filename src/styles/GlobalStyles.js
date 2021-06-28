@@ -14,6 +14,7 @@ export const GlobalStyles = createGlobalStyle`
 
     body {
         height: 100%;
+        color: ${props => props.theme.defaultColor}
     }
 
     body,
@@ -27,6 +28,11 @@ export const GlobalStyles = createGlobalStyle`
 
     button {
         cursor: pointer;
+    }
+
+    button,
+    input {
+        outline: 0;
     }
 
     #root {
