@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import axios from 'axios';
+
+const { REACT_APP_API_URL, REACT_APP_MOVIE_API_KEY } = process.env;
 
 export const LayoutContainer = ({ children }) => {
     const [search, setSearch] = useState('');
@@ -9,14 +12,22 @@ export const LayoutContainer = ({ children }) => {
         setSearch(e.target.value);
     };
 
-    const handleSearchMovies = () => {
+    const handleSearchMovies = async () => {
         setIsSearching(true);
 
-        // Send request...
-        setTimeout(() => {
-            setMovies([{ id: 1 }, { id: 2 }]);
+        try {
+            // Send request...
+            const url = `${REACT_APP_API_URL}/search/movie?api_key=${REACT_APP_MOVIE_API_KEY}&query=${search}`;
+
+            const {
+                data: { results }
+            } = await axios.get(url);
+
+            setMovies(results);
             setIsSearching(false);
-        }, 3000);
+        } catch (e) {
+            console.error('[e]', e);
+        }
     };
 
     return children({
