@@ -1,5 +1,5 @@
 export const fontFamily = "'Montserrat', sans-serif";
-export const maxWidth = '145rem';
+export const maxWidth = '158rem';
 
 export const fontSize = {
     xs: '1.2rem',
@@ -30,6 +30,7 @@ export const lightColors = {
 };
 
 export const darkColors = {
+    800: 'rgba(0,0,0,.5)',
     900: '#121212'
 };
 
