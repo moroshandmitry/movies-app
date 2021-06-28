@@ -25,7 +25,8 @@ export const margin = {
 };
 
 export const lightColors = {
-    500: '#fff'
+    500: '#fff',
+    600: '#e2e2e2'
 };
 
 export const darkColors = {

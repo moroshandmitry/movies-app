@@ -3,6 +3,7 @@
 import { ThemeProvider } from 'styled-components';
 
 import { Layout } from './components';
+import { LayoutContainer } from './containers';
 import { GlobalStyles } from './styles/GlobalStyles';
 import {
     darkTheme
@@ -24,9 +25,18 @@ export const App = () => {
                 Switch to Light Theme
             </button> */}
             <GlobalStyles />
-            <Layout>
-                <span>Content</span>
-            </Layout>
+            <LayoutContainer>
+                {({ movies, ...otherProps }) => (
+                    <Layout {...otherProps}>
+                        {console.log('[otherProps]', otherProps)}
+                        {console.log('[movies]', movies)}
+                        <span>Movies list:</span>
+                        {movies.map(movie => (
+                            <div key={movie.id}>Movie ID: {movie.id}</div>
+                        ))}
+                    </Layout>
+                )}
+            </LayoutContainer>
         </ThemeProvider>
     );
 };

@@ -8,4 +8,10 @@ export const StyledInput = styled.input`
     padding: ${props => `${padding} ${props.theme.padding.sm}`};
     border-radius: 0.3rem;
     border: none;
+
+    &:disabled {
+        background: ${props => props.theme.lightColors[600]};
+        color: ${props => props.theme.lightColors[500]};
+        cursor: not-allowed;
+    }
 `;
