@@ -3,7 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import { Layout } from './components';
-import { LayoutContainer } from './containers';
+import { LayoutContainer, MovieDetailsPageContainer } from './containers';
 import { HomePage } from './pages';
 import { GlobalStyles } from './styles/GlobalStyles';
 import {
@@ -40,6 +40,12 @@ export const App = () => {
                                 >
                                     {/* useHistory, useMatch, useLocation */}
                                     <FakePage />
+                                </Route>
+
+                                <Route path="/movie/:movieId" exact>
+                                    <MovieDetailsPageContainer
+                                        movies={movies}
+                                    />
                                 </Route>
 
                                 <Route path="/" exact>
