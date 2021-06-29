@@ -1,12 +1,5 @@
 // import { useState } from 'react';
-import {
-    BrowserRouter,
-    Route,
-    useHistory,
-    useLocation,
-    useRouteMatch,
-    useParams
-} from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import { ThemeProvider } from 'styled-components';
 
@@ -20,16 +13,11 @@ import {
 } from './themes';
 
 const FakePage = props => {
-    const history = useHistory();
-    const location = useLocation();
-    const match = useRouteMatch();
-    const params = useParams();
-    console.log('[props]', props);
-    console.log('[history]', history);
-    console.log('[location]', location);
-    console.log('[match]', match);
-    console.log('[params]', params);
     return <p>I'm a fake page!</p>;
+};
+
+const OfficePage = props => {
+    return <p>I'm an office page!</p>;
 };
 
 export const App = () => {
@@ -51,10 +39,20 @@ export const App = () => {
                 <LayoutContainer>
                     {({ movies, ...otherProps }) => (
                         <Layout {...otherProps}>
-                            <Route path="/office">
-                                {/* useHistory, useMatch, useLocation */}
-                                <FakePage name="Jack" />
-                            </Route>
+                            <Switch>
+                                <Route path="/fake">
+                                    {/* useHistory, useMatch, useLocation */}
+                                    <FakePage />
+                                </Route>
+
+                                <Route path="/" exact>
+                                    {/* useHistory, useMatch, useLocation */}
+                                    <OfficePage />
+                                </Route>
+
+                                {/* Redirect all fake pages to home page */}
+                                <Redirect to="/" />
+                            </Switch>
 
                             <HomePage movies={movies} />
                         </Layout>
