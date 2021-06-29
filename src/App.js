@@ -1,5 +1,12 @@
 // import { useState } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import {
+    BrowserRouter,
+    Route,
+    useHistory,
+    useLocation,
+    useRouteMatch,
+    useParams
+} from 'react-router-dom';
 
 import { ThemeProvider } from 'styled-components';
 
@@ -13,7 +20,15 @@ import {
 } from './themes';
 
 const FakePage = props => {
+    const history = useHistory();
+    const location = useLocation();
+    const match = useRouteMatch();
+    const params = useParams();
     console.log('[props]', props);
+    console.log('[history]', history);
+    console.log('[location]', location);
+    console.log('[match]', match);
+    console.log('[params]', params);
     return <p>I'm a fake page!</p>;
 };
 
@@ -36,7 +51,10 @@ export const App = () => {
                 <LayoutContainer>
                     {({ movies, ...otherProps }) => (
                         <Layout {...otherProps}>
-                            <Route path="/" component={FakePage} />
+                            <Route path="/office">
+                                {/* useHistory, useMatch, useLocation */}
+                                <FakePage name="Jack" />
+                            </Route>
 
                             <HomePage movies={movies} />
                         </Layout>
