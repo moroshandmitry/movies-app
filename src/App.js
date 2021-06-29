@@ -1,7 +1,6 @@
 // import { useState } from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-
 import { ThemeProvider } from 'styled-components';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import { Layout } from './components';
 import { LayoutContainer } from './containers';
@@ -14,10 +13,6 @@ import {
 
 const FakePage = props => {
     return <p>I'm a fake page!</p>;
-};
-
-const OfficePage = props => {
-    return <p>I'm an office page!</p>;
 };
 
 export const App = () => {
@@ -40,21 +35,21 @@ export const App = () => {
                     {({ movies, ...otherProps }) => (
                         <Layout {...otherProps}>
                             <Switch>
-                                <Route path="/fake">
+                                <Route
+                                    path={['/favorite', '/profile', '/logout']}
+                                >
                                     {/* useHistory, useMatch, useLocation */}
                                     <FakePage />
                                 </Route>
 
                                 <Route path="/" exact>
                                     {/* useHistory, useMatch, useLocation */}
-                                    <OfficePage />
+                                    <HomePage movies={movies} />
                                 </Route>
 
                                 {/* Redirect all fake pages to home page */}
                                 <Redirect to="/" />
                             </Switch>
-
-                            <HomePage movies={movies} />
                         </Layout>
                     )}
                 </LayoutContainer>
