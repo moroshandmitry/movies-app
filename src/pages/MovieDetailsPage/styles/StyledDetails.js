@@ -2,6 +2,7 @@ import styled from 'styled-components/macro';
 
 export const StyledDetails = styled.div`
     display: flex;
+    flex-direction: column;
     height: 100%;
     background-image: url(${props => props.$imageUrl});
     background-size: cover;

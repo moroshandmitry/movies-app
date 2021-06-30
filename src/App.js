@@ -27,29 +27,32 @@ export const App = () => {
         <BrowserRouter>
             <ThemeProvider theme={darkTheme}>
                 {/* <span>Theme</span>{' '}
-            <button type="button" onClick={handleSwitchTheme}>
-                Switch to Light Theme
-            </button> */}
+                <button type="button" onClick={handleSwitchTheme}>
+                    Switch to Light Theme
+                </button> */}
                 <GlobalStyles />
                 <LayoutContainer>
                     {({ movies, ...otherProps }) => (
                         <Layout {...otherProps}>
                             <Switch>
+                                {/* useHistory, useMatch, useLocation */}
                                 <Route
                                     path={['/favorite', '/profile', '/logout']}
                                 >
-                                    {/* useHistory, useMatch, useLocation */}
                                     <FakePage />
                                 </Route>
 
+                                {/* movieId - is a default slug */}
+                                {/* <Route path="/:slug" exact component={ItemPage} /> */}
+                                {/* useHistory, useMatch, useLocation */}
                                 <Route path="/movie/:movieId" exact>
                                     <MovieDetailsPageContainer
                                         movies={movies}
                                     />
                                 </Route>
 
+                                {/* useHistory, useMatch, useLocation */}
                                 <Route path="/" exact>
-                                    {/* useHistory, useMatch, useLocation */}
                                     <HomePage movies={movies} />
                                 </Route>
 

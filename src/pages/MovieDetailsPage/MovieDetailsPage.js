@@ -1,6 +1,6 @@
 import PT from 'prop-types';
 
-import { Button } from '../../components';
+import { Button, Link } from '../../components';
 import {
     StyledWrapper,
     StyledDetails,
@@ -9,14 +9,16 @@ import {
     StyledInfoWrapper,
     StyledInfo,
     StyledTitle,
-    StyledReleaseDate
+    StyledReleaseDate,
+    StyledDetailsTop,
+    StyledSimilarMoviesWrapper
 } from './styles';
 
 // /movie/{movie_id}
 
 const { REACT_APP_STORAGE_IMAGES_URL } = process.env;
 
-export const MovieDetailsPage = ({ movie }) => {
+export const MovieDetailsPage = ({ movie, similarMovies }) => {
     const {
         backdrop_path,
         poster_path,
@@ -31,18 +33,41 @@ export const MovieDetailsPage = ({ movie }) => {
     return (
         <StyledWrapper>
             <StyledDetails $imageUrl={backdropUrl}>
-                <StyledImageWrapper>
-                    <StyledImage src={posterUrl} alt={original_title} />
-                </StyledImageWrapper>
+                <StyledDetailsTop>
+                    <StyledImageWrapper>
+                        <StyledImage src={posterUrl} alt={original_title} />
+                    </StyledImageWrapper>
 
-                <StyledInfoWrapper>
-                    <StyledInfo>
-                        <StyledTitle>{original_title}</StyledTitle>
-                        <StyledReleaseDate>{release_date}</StyledReleaseDate>
-                        <p>{overview}</p>
-                    </StyledInfo>
-                    <Button>Add to Favorite</Button>
-                </StyledInfoWrapper>
+                    <StyledInfoWrapper>
+                        <StyledInfo>
+                            <StyledTitle>{original_title}</StyledTitle>
+                            <StyledReleaseDate>
+                                {release_date}
+                            </StyledReleaseDate>
+                            <p>{overview}</p>
+                        </StyledInfo>
+                        <Button>Add to Favorite</Button>
+                    </StyledInfoWrapper>
+                </StyledDetailsTop>
+
+                <StyledSimilarMoviesWrapper>
+                    {similarMovies.map(
+                        ({ id, poster_path, original_title }) => {
+                            const posterUrl =
+                                REACT_APP_STORAGE_IMAGES_URL + poster_path;
+
+                            return (
+                                <Link
+                                    to={`/movie/${id}`}
+                                    key={id}
+                                    title={original_title}
+                                >
+                                    <img src={posterUrl} alt={original_title} />
+                                </Link>
+                            );
+                        }
+                    )}
+                </StyledSimilarMoviesWrapper>
             </StyledDetails>
         </StyledWrapper>
     );
