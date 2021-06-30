@@ -9,6 +9,7 @@ import {
     StyledInfoWrapper,
     StyledInfo,
     StyledTitle,
+    StyledDescription,
     StyledReleaseDate,
     StyledDetailsTop,
     StyledSimilarMoviesWrapper
@@ -42,9 +43,9 @@ export const MovieDetailsPage = ({ movie, similarMovies }) => {
                         <StyledInfo>
                             <StyledTitle>{original_title}</StyledTitle>
                             <StyledReleaseDate>
-                                {release_date}
+                                Movie was released {release_date}
                             </StyledReleaseDate>
-                            <p>{overview}</p>
+                            <StyledDescription>{overview}</StyledDescription>
                         </StyledInfo>
                         <Button>Add to Favorite</Button>
                     </StyledInfoWrapper>
