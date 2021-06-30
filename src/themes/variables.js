@@ -34,6 +34,10 @@ export const darkColors = {
     900: '#121212'
 };
 
+export const commonColors = {
+    danger: 'red'
+};
+
 // Default
 export const defaultFontFamily = fontFamily;
 export const defaultFontSize = fontSize.md;
