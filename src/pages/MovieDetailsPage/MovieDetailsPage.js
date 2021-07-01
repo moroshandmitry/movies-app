@@ -1,4 +1,5 @@
 import PT from 'prop-types';
+import { connect } from 'react-redux';
 
 import { Button, Link } from '../../components';
 import {
@@ -15,64 +16,117 @@ import {
     StyledSimilarMoviesWrapper
 } from './styles';
 
-// /movie/{movie_id}
+import { updateFirstNameAndLastName } from '../../store';
 
 const { REACT_APP_STORAGE_IMAGES_URL } = process.env;
 
-export const MovieDetailsPage = ({ movie, similarMovies }) => {
-    const {
-        backdrop_path,
-        poster_path,
-        original_title,
-        release_date,
-        overview
-    } = movie;
-
-    const backdropUrl = REACT_APP_STORAGE_IMAGES_URL + backdrop_path;
-    const posterUrl = REACT_APP_STORAGE_IMAGES_URL + poster_path;
-
-    return (
-        <StyledWrapper>
-            <StyledDetails $imageUrl={backdropUrl}>
-                <StyledDetailsTop>
-                    <StyledImageWrapper>
-                        <StyledImage src={posterUrl} alt={original_title} />
-                    </StyledImageWrapper>
-
-                    <StyledInfoWrapper>
-                        <StyledInfo>
-                            <StyledTitle>{original_title}</StyledTitle>
-                            <StyledReleaseDate>
-                                Movie was released {release_date}
-                            </StyledReleaseDate>
-                            <StyledDescription>{overview}</StyledDescription>
-                        </StyledInfo>
-                        <Button>Add to Favorite</Button>
-                    </StyledInfoWrapper>
-                </StyledDetailsTop>
-
-                <StyledSimilarMoviesWrapper>
-                    {similarMovies.map(
-                        ({ id, poster_path, original_title }) => {
-                            const posterUrl =
-                                REACT_APP_STORAGE_IMAGES_URL + poster_path;
-
-                            return (
-                                <Link
-                                    to={`/movie/${id}`}
-                                    key={id}
-                                    title={original_title}
-                                >
-                                    <img src={posterUrl} alt={original_title} />
-                                </Link>
-                            );
-                        }
-                    )}
-                </StyledSimilarMoviesWrapper>
-            </StyledDetails>
-        </StyledWrapper>
-    );
+const mapStateToProps = state => {
+    return {
+        // state => Global store
+        firstName: state.auth.firstName,
+        lastName: state.auth.lastName,
+        age: state.auth.age
+    };
 };
+
+// const mapDispatchToProps = dispatch => {
+//     return {
+//         onUpdateFirstNameAndLastName: (newFirstName, newLastName) =>
+//             dispatch(updateFirstNameAndLastName(newFirstName, newLastName))
+//     };
+// };
+
+const mapDispatchToProps = {
+    onUpdateFirstNameAndLastName: updateFirstNameAndLastName
+};
+
+export const MovieDetailsPage = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(
+    ({
+        movie,
+        similarMovies,
+        firstName,
+        lastName,
+        age,
+        onUpdateFirstNameAndLastName
+    }) => {
+        const {
+            backdrop_path,
+            poster_path,
+            original_title,
+            release_date,
+            overview
+        } = movie;
+
+        console.log('[firstName]', firstName);
+        console.log('[lastName]', lastName);
+        console.log('[age]', age);
+        // console.log(
+        //     '[onUpdateFirstNameAndLastName()]',
+        //     onUpdateFirstNameAndLastName()
+        // );
+
+        const backdropUrl = REACT_APP_STORAGE_IMAGES_URL + backdrop_path;
+        const posterUrl = REACT_APP_STORAGE_IMAGES_URL + poster_path;
+
+        return (
+            <StyledWrapper>
+                <StyledDetails $imageUrl={backdropUrl}>
+                    <StyledDetailsTop>
+                        <StyledImageWrapper>
+                            <StyledImage src={posterUrl} alt={original_title} />
+                        </StyledImageWrapper>
+
+                        <StyledInfoWrapper>
+                            <StyledInfo>
+                                <StyledTitle>{original_title}</StyledTitle>
+                                <StyledReleaseDate>
+                                    Movie was released {release_date}
+                                </StyledReleaseDate>
+                                <StyledDescription>
+                                    {overview}
+                                </StyledDescription>
+                            </StyledInfo>
+
+                            <Button
+                                onClick={() =>
+                                    onUpdateFirstNameAndLastName('Bob', 'Brown')
+                                }
+                            >
+                                Update firstname and lastname
+                            </Button>
+                            {/* <Button>Add to Favorite</Button> */}
+                        </StyledInfoWrapper>
+                    </StyledDetailsTop>
+
+                    <StyledSimilarMoviesWrapper>
+                        {similarMovies.map(
+                            ({ id, poster_path, original_title }) => {
+                                const posterUrl =
+                                    REACT_APP_STORAGE_IMAGES_URL + poster_path;
+
+                                return (
+                                    <Link
+                                        to={`/movie/${id}`}
+                                        key={id}
+                                        title={original_title}
+                                    >
+                                        <img
+                                            src={posterUrl}
+                                            alt={original_title}
+                                        />
+                                    </Link>
+                                );
+                            }
+                        )}
+                    </StyledSimilarMoviesWrapper>
+                </StyledDetails>
+            </StyledWrapper>
+        );
+    }
+);
 
 MovieDetailsPage.propTypes = {
     /**

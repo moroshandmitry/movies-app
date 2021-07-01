@@ -15,6 +15,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
  *  (for example another small reducer contain another info page)
  */
 import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
 import { Layout } from './components';
 import { LayoutContainer, MovieDetailsPageContainer } from './containers';
@@ -31,17 +32,17 @@ const store = createStore(rootReducer);
 
 console.log('[store]', store);
 
-console.log('[Before store.getState()]', store.getState());
+// console.log('[Before store.getState()]', store.getState());
 
-store.dispatch({
-    type: 'UPDATE_FIRST_NAME_AND_LAST_NAME',
-    payload: {
-        newFirstName: 'Will',
-        newLastName: 'Smith'
-    }
-});
+// store.dispatch({
+//     type: 'UPDATE_FIRST_NAME_AND_LAST_NAME',
+//     payload: {
+//         newFirstName: 'Will',
+//         newLastName: 'Smith'
+//     }
+// });
 
-console.log('[After store.getState()]', store.getState());
+// console.log('[After store.getState()]', store.getState());
 
 const FakePage = props => {
     return <p>I'm a fake page!</p>;
@@ -56,49 +57,55 @@ export const App = () => {
     //     });
 
     return (
-        <BrowserRouter>
-            <ThemeProvider theme={darkTheme}>
-                {/* <span>Theme</span>{' '}
+        <Provider store={store}>
+            <BrowserRouter>
+                <ThemeProvider theme={darkTheme}>
+                    {/* <span>Theme</span>{' '}
                 <button type="button" onClick={handleSwitchTheme}>
                     Switch to Light Theme
                 </button> */}
-                <GlobalStyles />
-                <LayoutContainer>
-                    {({ movies, ...otherProps }) => (
-                        <Layout {...otherProps}>
-                            <Switch>
-                                <Route path="/auth">
-                                    <AuthPage />
-                                </Route>
+                    <GlobalStyles />
+                    <LayoutContainer>
+                        {({ movies, ...otherProps }) => (
+                            <Layout {...otherProps}>
+                                <Switch>
+                                    <Route path="/auth">
+                                        <AuthPage />
+                                    </Route>
 
-                                {/* useHistory, useMatch, useLocation */}
-                                <Route
-                                    path={['/favorite', '/profile', '/logout']}
-                                >
-                                    <FakePage />
-                                </Route>
+                                    {/* useHistory, useMatch, useLocation */}
+                                    <Route
+                                        path={[
+                                            '/favorite',
+                                            '/profile',
+                                            '/logout'
+                                        ]}
+                                    >
+                                        <FakePage />
+                                    </Route>
 
-                                {/* movieId - is a default slug */}
-                                {/* <Route path="/:slug" exact component={ItemPage} /> */}
-                                {/* useHistory, useMatch, useLocation */}
-                                <Route path="/movie/:movieId" exact>
-                                    <MovieDetailsPageContainer
-                                        movies={movies}
-                                    />
-                                </Route>
+                                    {/* movieId - is a default slug */}
+                                    {/* <Route path="/:slug" exact component={ItemPage} /> */}
+                                    {/* useHistory, useMatch, useLocation */}
+                                    <Route path="/movie/:movieId" exact>
+                                        <MovieDetailsPageContainer
+                                            movies={movies}
+                                        />
+                                    </Route>
 
-                                {/* useHistory, useMatch, useLocation */}
-                                <Route path="/" exact>
-                                    <HomePage movies={movies} />
-                                </Route>
+                                    {/* useHistory, useMatch, useLocation */}
+                                    <Route path="/" exact>
+                                        <HomePage movies={movies} />
+                                    </Route>
 
-                                {/* Redirect all fake pages to home page */}
-                                <Redirect to="/" />
-                            </Switch>
-                        </Layout>
-                    )}
-                </LayoutContainer>
-            </ThemeProvider>
-        </BrowserRouter>
+                                    {/* Redirect all fake pages to home page */}
+                                    <Redirect to="/" />
+                                </Switch>
+                            </Layout>
+                        )}
+                    </LayoutContainer>
+                </ThemeProvider>
+            </BrowserRouter>
+        </Provider>
     );
 };
