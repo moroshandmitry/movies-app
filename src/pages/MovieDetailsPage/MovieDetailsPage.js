@@ -1,5 +1,11 @@
 import PT from 'prop-types';
-import { connect } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
+
+// to get the whole store => useStore => isn't recommended
+// RECOMMENDED => useSelector, useDispatch
+
+// mapStateToProps => use hook => useSelector
+// mapDispatchToProps => use hook => useDispatch
 
 import { Button, Link } from '../../components';
 import {
@@ -43,13 +49,20 @@ const mapDispatchToProps = {
 };
 */
 
+// like mapStateToProps => state => Global store
+// mapStateToProps will returned Object
+// useSelector will returned everything: String, Number, Array... etc.
+const authSelector = state => ({
+    firstName: state.auth.firstName,
+    lastName: state.auth.lastName,
+    age: state.auth.age
+});
+
 export const MovieDetailsPage = connect(
-    // mapStateToProps => state => Global store
-    state => ({
-        firstName: state.auth.firstName,
-        lastName: state.auth.lastName,
-        age: state.auth.age
-    }),
+    // like mapStateToProps => state => Global store
+    // mapStateToProps will returned Object
+    // useSelector will returned everything: String, Number, Array... etc.
+    authSelector,
     // mapDispatchToProps for update
     {
         onUpdateFirstNameAndLastName: updateFirstNameAndLastName
@@ -70,6 +83,8 @@ export const MovieDetailsPage = connect(
             release_date,
             overview
         } = movie;
+
+        useSelector();
 
         console.log('[firstName]', firstName);
         console.log('[lastName]', lastName);
