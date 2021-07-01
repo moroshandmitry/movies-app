@@ -20,6 +20,7 @@ import { updateFirstNameAndLastName } from '../../store';
 
 const { REACT_APP_STORAGE_IMAGES_URL } = process.env;
 
+/*
 const mapStateToProps = state => {
     return {
         // state => Global store
@@ -29,20 +30,30 @@ const mapStateToProps = state => {
     };
 };
 
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         onUpdateFirstNameAndLastName: (newFirstName, newLastName) =>
-//             dispatch(updateFirstNameAndLastName(newFirstName, newLastName))
-//     };
-// };
+const mapDispatchToProps = dispatch => {
+    return {
+        onUpdateFirstNameAndLastName: (newFirstName, newLastName) =>
+            dispatch(updateFirstNameAndLastName(newFirstName, newLastName))
+    };
+};
 
+// shorded mapDispatchToProps as above ^
 const mapDispatchToProps = {
     onUpdateFirstNameAndLastName: updateFirstNameAndLastName
 };
+*/
 
 export const MovieDetailsPage = connect(
-    mapStateToProps,
-    mapDispatchToProps
+    // mapStateToProps => state => Global store
+    state => ({
+        firstName: state.auth.firstName,
+        lastName: state.auth.lastName,
+        age: state.auth.age
+    }),
+    // mapDispatchToProps for update
+    {
+        onUpdateFirstNameAndLastName: updateFirstNameAndLastName
+    }
 )(
     ({
         movie,
