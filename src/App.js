@@ -1,15 +1,47 @@
 // import { useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+// Storage (Global STATE) => Big object that contains state
+// getState => To look at the current storage => returned state
+// dispatch => to send update in store
+// replaceReducer => take one of the existing reducers and replace with another reducer
+/**
+ * subscribe => notifying method our app about a update store
+ * subscribe(listener) => listener is a function for update app render
+ */
+/**
+ * Big reducer will contain more small reducers
+ *  (for example small reducer contain info page)
+ *  (for example another small reducer contain another info page)
+ */
+import { createStore } from 'redux';
 
 import { Layout } from './components';
 import { LayoutContainer, MovieDetailsPageContainer } from './containers';
 import { HomePage, AuthPage } from './pages';
 import { GlobalStyles } from './styles/GlobalStyles';
+
+import { rootReducer } from './store';
 import {
     darkTheme
     // lightTheme
 } from './themes';
+
+const store = createStore(rootReducer);
+
+console.log('[store]', store);
+
+console.log('[Before store.getState()]', store.getState());
+
+store.dispatch({
+    type: 'UPDATE_FIRST_NAME_AND_LAST_NAME',
+    payload: {
+        newFirstName: 'Will',
+        newLastName: 'Smith'
+    }
+});
+
+console.log('[After store.getState()]', store.getState());
 
 const FakePage = props => {
     return <p>I'm a fake page!</p>;
