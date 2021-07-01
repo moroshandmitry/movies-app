@@ -73,6 +73,7 @@ export const AuthPage = () => {
                                         {label}
                                     </StyledLabel>
                                     <Input
+                                        $hasError={errors[name]}
                                         ref={register(validationRules)}
                                         id={id}
                                         name={name}
