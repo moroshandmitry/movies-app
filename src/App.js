@@ -14,8 +14,9 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
  *  (for example small reducer contain info page)
  *  (for example another small reducer contain another info page)
  */
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 
 import { Layout } from './components';
 import { LayoutContainer, MovieDetailsPageContainer } from './containers';
@@ -28,10 +29,14 @@ import {
     // lightTheme
 } from './themes';
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const middlewares = [thunk];
+
 const store = createStore(
     rootReducer,
-    // for use Redux DEVTOOLS
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    composeEnhancers(applyMiddleware(...middlewares))
+    // for use Redux DEVTOOLS basic witout middleware
+    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 console.log('[store]', store);

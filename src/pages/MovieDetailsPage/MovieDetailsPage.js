@@ -1,5 +1,5 @@
 import PT from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
+// import { useSelector, useDispatch } from 'react-redux';
 
 // to get the whole store => useStore => isn't recommended
 // RECOMMENDED => useSelector, useDispatch
@@ -22,7 +22,7 @@ import {
     StyledSimilarMoviesWrapper
 } from './styles';
 
-import { updateFirstNameAndLastName } from '../../store';
+// import { updateFirstNameAndLastName } from '../../store';
 
 const { REACT_APP_STORAGE_IMAGES_URL } = process.env;
 
@@ -52,11 +52,11 @@ const mapDispatchToProps = {
 // like mapStateToProps => state => Global store
 // mapStateToProps will returned Object
 // useSelector will returned everything: String, Number, Array... etc.
-const authSelector = state => ({
-    firstName: state.auth.firstName,
-    lastName: state.auth.lastName,
-    age: state.auth.age
-});
+// const authSelector = state => ({
+//     firstName: state.auth.firstName,
+//     lastName: state.auth.lastName,
+//     age: state.auth.age
+// });
 
 export const MovieDetailsPage = ({
     movie,
@@ -76,19 +76,16 @@ export const MovieDetailsPage = ({
     } = movie;
 
     // Hook's have are more renders
-    const { firstName, lastName, age } = useSelector(authSelector);
-    const dispatch = useDispatch();
+    // const { firstName, lastName, age } = useSelector(authSelector);
+    // const dispatch = useDispatch();
 
-    const onUpdateFirstNameAndLastName = (newFirstName, newLastName) => {
-        dispatch(updateFirstNameAndLastName(newFirstName, newLastName));
-    };
+    // const onUpdateFirstNameAndLastName = (newFirstName, newLastName) => {
+    //     dispatch(updateFirstNameAndLastName(newFirstName, newLastName));
+    // };
 
-    console.log(
-        `Hello! My name is ${firstName}, my surname is ${lastName} and my age is ${age}`
-    );
-    // console.log('[firstName]', firstName);
-    // console.log('[lastName]', lastName);
-    // console.log('[age]', age);
+    // console.log(
+    //     `Hello! My name is ${firstName}, my surname is ${lastName} and my age is ${age}`
+    // );
     // console.log(
     //     '[onUpdateFirstNameAndLastName()]',
     //     onUpdateFirstNameAndLastName()
@@ -114,14 +111,7 @@ export const MovieDetailsPage = ({
                             <StyledDescription>{overview}</StyledDescription>
                         </StyledInfo>
 
-                        <Button
-                            onClick={() =>
-                                onUpdateFirstNameAndLastName('Bob', 'Brown')
-                            }
-                        >
-                            Update firstname and lastname
-                        </Button>
-                        {/* <Button>Add to Favorite</Button> */}
+                        <Button>Add to Favorite</Button>
                     </StyledInfoWrapper>
                 </StyledDetailsTop>
 
@@ -159,7 +149,11 @@ MovieDetailsPage.propTypes = {
         backdrop_path: PT.string,
         overview: PT.string.isRequired,
         release_date: PT.string.isRequired
-    }).isRequired
+    }).isRequired,
+    /**
+     * A list of similar movies
+     */
+    similarMovies: PT.arrayOf(PT.object).isRequired
 };
 
 // popularity: 360.116, poster_path: "/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg", release_date: "2018-04-25", … }
