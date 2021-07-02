@@ -57,6 +57,16 @@ const FakePage = props => {
     return <p>I'm a fake page!</p>;
 };
 
+// const LogoutPage = () => {
+//     const dispatch = useDispatch();
+//     useEffect(() => {
+//         dispatch(logoutUser());
+//         // eslint-disable-next-line react-hooks/exhaustive-deps
+//     }, []);
+
+//     return <Redirect to="/auth" />;
+// };
+
 export const App = () => {
     // const [theme, setTheme] = useState(darkTheme);
 
@@ -78,19 +88,17 @@ export const App = () => {
                         {({ movies, ...otherProps }) => (
                             <Layout {...otherProps}>
                                 <Switch>
-                                    <Route path="/auth">
-                                        <AuthPage />
+                                    {/* useHistory, useMatch, useLocation */}
+                                    <Route path={['/favorite', '/profile']}>
+                                        <FakePage />
                                     </Route>
 
-                                    {/* useHistory, useMatch, useLocation */}
-                                    <Route
-                                        path={[
-                                            '/favorite',
-                                            '/profile',
-                                            '/logout'
-                                        ]}
-                                    >
-                                        <FakePage />
+                                    {/* <Route path="/logout">
+                                        <LogoutPage />
+                                    </Route> */}
+
+                                    <Route path="/auth">
+                                        <AuthPage />
                                     </Route>
 
                                     {/* movieId - is a default slug */}

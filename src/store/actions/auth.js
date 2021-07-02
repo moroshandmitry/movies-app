@@ -1,17 +1,24 @@
 // action creater
 import * as types from '../types';
 
-export const updateFirstNameAndLastName = (newFirstName, newLastName) => {
-    // redux thunk
-    return dispatch => {
-        setTimeout(() => {
-            dispatch({
-                type: types.UPDATE_FIRST_NAME_AND_LAST_NAME,
-                payload: {
-                    newFirstName,
-                    newLastName
-                }
-            });
-        }, 2000);
+export const authenticateUser = (idToken, localId) => {
+    localStorage.setItem('idToken', idToken);
+    localStorage.setItem('localId', localId);
+
+    return {
+        type: types.AUTHENTICATE_USER,
+        payload: {
+            idToken,
+            localId
+        }
+    };
+};
+
+export const logoutUser = () => {
+    localStorage.removeItem('idToken');
+    localStorage.removeItem('localId');
+
+    return {
+        type: types.LOGOUT_USER
     };
 };

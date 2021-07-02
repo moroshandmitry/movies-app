@@ -1,9 +1,11 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Link } from '../Link';
 import { StyledNavList, StyledNavItem } from './styles';
+import { logoutUser } from '../../store';
 
-const LINKS = [
+const AUTHENTICATED_LINKS = [
     {
         id: 1,
         url: '/',
@@ -22,8 +24,17 @@ const LINKS = [
     },
     {
         id: 4,
-        url: '/logout',
+        // url: '/logout',
         title: 'Logout'
+    }
+];
+
+const NOT_AUTHENTICATED_LINKS = [
+    {
+        id: 1,
+        url: '/',
+        exact: true,
+        title: 'Home'
     },
     {
         id: 5,
@@ -32,16 +43,38 @@ const LINKS = [
     }
 ];
 
+const authSelector = state => !!state.auth.idToken;
+
 export const NavBar = () => {
+    const isAuthenticated = useSelector(authSelector);
+
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    const handleLogout = () => {
+        dispatch(logoutUser());
+        history.push('/auth');
+    };
+
+    const links = isAuthenticated
+        ? AUTHENTICATED_LINKS
+        : NOT_AUTHENTICATED_LINKS;
+
     return (
         <nav>
             <StyledNavList>
-                {LINKS.map(({ id, title, exact, url }) => {
+                {links.map(({ id, title, exact, url }) => {
                     return (
                         <StyledNavItem key={id}>
-                            <Link as={NavLink} to={url} exact>
-                                {title}
-                            </Link>
+                            {url ? (
+                                <Link as={NavLink} to={url} exact={exact}>
+                                    {title}
+                                </Link>
+                            ) : (
+                                <Link as="span" onClick={handleLogout}>
+                                    {title}
+                                </Link>
+                            )}
                         </StyledNavItem>
                     );
                 })}

@@ -1,21 +1,26 @@
 import * as types from '../types';
 
 const initialState = {
-    firstName: 'John',
-    lastName: 'Doe',
-    age: 23
+    idToken: null,
+    localId: null
 };
 
 // Helper func's like this (trick => уловка)
-const updateFirstNameAndLastName = (state, payload) => {
-    const { newFirstName, newLastName } = payload;
+const authenticateUser = (state, payload) => {
+    const { idToken, localId } = payload;
 
     return {
         ...state,
-        firstName: newFirstName,
-        lastName: newLastName
+        idToken,
+        localId
     };
 };
+
+const logoutUser = state => ({
+    ...state,
+    idToken: null,
+    localId: null
+});
 
 /**
  * state of global store
@@ -25,8 +30,11 @@ export const authReducer = (state = initialState, action) => {
     const { type, payload } = action;
 
     switch (type) {
-        case types.UPDATE_FIRST_NAME_AND_LAST_NAME:
-            return updateFirstNameAndLastName(state, payload);
+        case types.AUTHENTICATE_USER:
+            return authenticateUser(state, payload);
+
+        case types.LOGOUT_USER:
+            return logoutUser(state);
         /**
          * for convenience use helper func's
          *         
