@@ -17,7 +17,9 @@ import {
     StyledWrapper,
     StyledFormWrapper,
     StyledFieldset,
-    StyledFormGroup
+    StyledFormGroup,
+    StyledTabs,
+    StyledTab
 } from './styles';
 
 import { authenticateUser } from '../../store';
@@ -93,7 +95,10 @@ export const AuthPage = () => {
     return (
         <StyledWrapper>
             <StyledFormWrapper>
-                <div>Tabs</div>
+                <StyledTabs>
+                    <StyledTab $active>Sign In</StyledTab>
+                    <StyledTab>Sign Out</StyledTab>
+                </StyledTabs>
                 <StyledForm onSubmit={handleSubmit(onSubmit, onError)}>
                     <StyledFieldset>
                         <StyledLegend>Sign In</StyledLegend>
