@@ -1,5 +1,5 @@
 import PT from 'prop-types';
-import { connect, useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 // to get the whole store => useStore => isn't recommended
 // RECOMMENDED => useSelector, useDispatch
@@ -58,101 +58,95 @@ const authSelector = state => ({
     age: state.auth.age
 });
 
-export const MovieDetailsPage = connect(
-    // like mapStateToProps => state => Global store
-    // mapStateToProps will returned Object
-    // useSelector will returned everything: String, Number, Array... etc.
-    authSelector,
-    // mapDispatchToProps for update
-    {
-        onUpdateFirstNameAndLastName: updateFirstNameAndLastName
-    }
-)(
-    ({
-        movie,
-        similarMovies,
-        firstName,
-        lastName,
-        age,
-        onUpdateFirstNameAndLastName
-    }) => {
-        const {
-            backdrop_path,
-            poster_path,
-            original_title,
-            release_date,
-            overview
-        } = movie;
+export const MovieDetailsPage = ({
+    movie,
+    similarMovies
+    // no neaded for hook useSelector(), useDispatch() and don't need func connect()
+    // firstName,
+    // lastName,
+    // age,
+    // onUpdateFirstNameAndLastName
+}) => {
+    const {
+        backdrop_path,
+        poster_path,
+        original_title,
+        release_date,
+        overview
+    } = movie;
 
-        useSelector();
+    // Hook's have are more renders
+    const { firstName, lastName, age } = useSelector(authSelector);
+    const dispatch = useDispatch();
 
-        console.log('[firstName]', firstName);
-        console.log('[lastName]', lastName);
-        console.log('[age]', age);
-        // console.log(
-        //     '[onUpdateFirstNameAndLastName()]',
-        //     onUpdateFirstNameAndLastName()
-        // );
+    const onUpdateFirstNameAndLastName = (newFirstName, newLastName) => {
+        dispatch(updateFirstNameAndLastName(newFirstName, newLastName));
+    };
 
-        const backdropUrl = REACT_APP_STORAGE_IMAGES_URL + backdrop_path;
-        const posterUrl = REACT_APP_STORAGE_IMAGES_URL + poster_path;
+    console.log(
+        `Hello! My name is ${firstName}, my surname is ${lastName} and my age is ${age}`
+    );
+    // console.log('[firstName]', firstName);
+    // console.log('[lastName]', lastName);
+    // console.log('[age]', age);
+    // console.log(
+    //     '[onUpdateFirstNameAndLastName()]',
+    //     onUpdateFirstNameAndLastName()
+    // );
 
-        return (
-            <StyledWrapper>
-                <StyledDetails $imageUrl={backdropUrl}>
-                    <StyledDetailsTop>
-                        <StyledImageWrapper>
-                            <StyledImage src={posterUrl} alt={original_title} />
-                        </StyledImageWrapper>
+    const backdropUrl = REACT_APP_STORAGE_IMAGES_URL + backdrop_path;
+    const posterUrl = REACT_APP_STORAGE_IMAGES_URL + poster_path;
 
-                        <StyledInfoWrapper>
-                            <StyledInfo>
-                                <StyledTitle>{original_title}</StyledTitle>
-                                <StyledReleaseDate>
-                                    Movie was released {release_date}
-                                </StyledReleaseDate>
-                                <StyledDescription>
-                                    {overview}
-                                </StyledDescription>
-                            </StyledInfo>
+    return (
+        <StyledWrapper>
+            <StyledDetails $imageUrl={backdropUrl}>
+                <StyledDetailsTop>
+                    <StyledImageWrapper>
+                        <StyledImage src={posterUrl} alt={original_title} />
+                    </StyledImageWrapper>
 
-                            <Button
-                                onClick={() =>
-                                    onUpdateFirstNameAndLastName('Bob', 'Brown')
-                                }
-                            >
-                                Update firstname and lastname
-                            </Button>
-                            {/* <Button>Add to Favorite</Button> */}
-                        </StyledInfoWrapper>
-                    </StyledDetailsTop>
+                    <StyledInfoWrapper>
+                        <StyledInfo>
+                            <StyledTitle>{original_title}</StyledTitle>
+                            <StyledReleaseDate>
+                                Movie was released {release_date}
+                            </StyledReleaseDate>
+                            <StyledDescription>{overview}</StyledDescription>
+                        </StyledInfo>
 
-                    <StyledSimilarMoviesWrapper>
-                        {similarMovies.map(
-                            ({ id, poster_path, original_title }) => {
-                                const posterUrl =
-                                    REACT_APP_STORAGE_IMAGES_URL + poster_path;
-
-                                return (
-                                    <Link
-                                        to={`/movie/${id}`}
-                                        key={id}
-                                        title={original_title}
-                                    >
-                                        <img
-                                            src={posterUrl}
-                                            alt={original_title}
-                                        />
-                                    </Link>
-                                );
+                        <Button
+                            onClick={() =>
+                                onUpdateFirstNameAndLastName('Bob', 'Brown')
                             }
-                        )}
-                    </StyledSimilarMoviesWrapper>
-                </StyledDetails>
-            </StyledWrapper>
-        );
-    }
-);
+                        >
+                            Update firstname and lastname
+                        </Button>
+                        {/* <Button>Add to Favorite</Button> */}
+                    </StyledInfoWrapper>
+                </StyledDetailsTop>
+
+                <StyledSimilarMoviesWrapper>
+                    {similarMovies.map(
+                        ({ id, poster_path, original_title }) => {
+                            const posterUrl =
+                                REACT_APP_STORAGE_IMAGES_URL + poster_path;
+
+                            return (
+                                <Link
+                                    to={`/movie/${id}`}
+                                    key={id}
+                                    title={original_title}
+                                >
+                                    <img src={posterUrl} alt={original_title} />
+                                </Link>
+                            );
+                        }
+                    )}
+                </StyledSimilarMoviesWrapper>
+            </StyledDetails>
+        </StyledWrapper>
+    );
+};
 
 MovieDetailsPage.propTypes = {
     /**
