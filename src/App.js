@@ -1,7 +1,4 @@
-import {
-    // useState,
-    useReducer
-} from 'react';
+// import { useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -57,28 +54,28 @@ const FakePage = props => {
 
 const authSelector = state => !!state.auth.idToken;
 
-const reducer = (state, action) => {
-    const { type, payload } = action;
-    switch (type) {
-        case 'INCREMENT':
-            return {
-                ...state,
-                count: state.count + 1
-            };
+// const reducer = (state, action) => {
+//     const { type, payload } = action;
+//     switch (type) {
+//         case 'INCREMENT':
+//             return {
+//                 ...state,
+//                 count: state.count + 1
+//             };
 
-        case 'DECREMENT':
-            return {
-                ...state,
-                count: state.count - 1
-            };
+//         case 'DECREMENT':
+//             return {
+//                 ...state,
+//                 count: state.count - 1
+//             };
 
-        default:
-            return state;
-    }
-};
+//         default:
+//             return state;
+//     }
+// };
 
 export const App = () => {
-    const [store, dispatch] = useReducer(reducer, { count: 0 });
+    // const [store, dispatch] = useReducer(reducer, { count: 0 });
 
     // const [theme, setTheme] = useState(darkTheme);
 
@@ -89,12 +86,12 @@ export const App = () => {
 
     const isAuthenticated = useSelector(authSelector);
 
-    const handleIncrement = () => {
-        dispatch({ type: 'INCREMENT' });
-    };
-    const handleDecrement = () => {
-        dispatch({ type: 'DECREMENT' });
-    };
+    // const handleIncrement = () => {
+    //     dispatch({ type: 'INCREMENT' });
+    // };
+    // const handleDecrement = () => {
+    //     dispatch({ type: 'DECREMENT' });
+    // };
 
     return (
         <BrowserRouter>
@@ -107,7 +104,7 @@ export const App = () => {
                 <LayoutContainer>
                     {({ movies, ...otherProps }) => (
                         <Layout {...otherProps}>
-                            <div>
+                            {/* <div>
                                 <button type="button" onClick={handleIncrement}>
                                     +1
                                 </button>
@@ -115,7 +112,7 @@ export const App = () => {
                                 <button type="button" onClick={handleDecrement}>
                                     -1
                                 </button>
-                            </div>
+                            </div> */}
                             <Switch>
                                 {isAuthenticated && (
                                     <Route path={['/favorite', '/profile']}>
