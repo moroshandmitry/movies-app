@@ -91,8 +91,16 @@ export const MovieDetailsPage = ({
     //     onUpdateFirstNameAndLastName()
     // );
 
-    const backdropUrl = REACT_APP_STORAGE_IMAGES_URL + backdrop_path;
-    const posterUrl = REACT_APP_STORAGE_IMAGES_URL + poster_path;
+    const backdropUrl =
+        REACT_APP_STORAGE_IMAGES_URL +
+        (backdrop_path !== null
+            ? poster_path
+            : 'tzve3LD534wsCnhOrSqgJ1mnRma.jpg');
+    const posterUrl =
+        REACT_APP_STORAGE_IMAGES_URL +
+        (poster_path !== null
+            ? poster_path
+            : 'tzve3LD534wsCnhOrSqgJ1mnRma.jpg');
 
     return (
         <StyledWrapper>
@@ -119,7 +127,10 @@ export const MovieDetailsPage = ({
                     {similarMovies.map(
                         ({ id, poster_path, original_title }) => {
                             const posterUrl =
-                                REACT_APP_STORAGE_IMAGES_URL + poster_path;
+                                REACT_APP_STORAGE_IMAGES_URL +
+                                (poster_path !== null
+                                    ? poster_path
+                                    : 'tzve3LD534wsCnhOrSqgJ1mnRma.jpg');
 
                             return (
                                 <Link

@@ -30,7 +30,8 @@ export const lightColors = {
 };
 
 export const darkColors = {
-    800: 'rgba(0,0,0,.5)',
+    700: '#100e19',
+    800: 'rgba(0,0,0,.7)',
     900: '#121212'
 };
 

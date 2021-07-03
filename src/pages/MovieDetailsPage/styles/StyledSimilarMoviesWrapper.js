@@ -11,7 +11,7 @@ export const StyledSimilarMoviesWrapper = styled.div`
     ${StyledLink} {
         &:hover,
         &:focus {
-            outline: 0.2rem solid ${props => props.theme.secondaryColor};
+            outline: 0.3rem solid ${props => props.theme.lightColors[500]};
             outline-offset: 0.3rem;
         }
 
