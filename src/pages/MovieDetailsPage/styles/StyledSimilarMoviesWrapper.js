@@ -18,6 +18,24 @@ export const StyledSimilarMoviesWrapper = styled.div`
         &:not(:last-child) {
             margin-right: ${props => props.theme.margin.md};
         }
+
+        @media only screen and (max-width: 1500px) {
+            &:not(:last-child) {
+                margin-right: 0;
+            }
+        }
+
+        @media only screen and (min-width: 1000px) and (max-width: 1500px) {
+            &:not(:last-child) {
+                margin-right: 0;
+            }
+        }
+
+        @media only screen and (min-width: 400px) and (max-width: 1000px) {
+            &:not(:last-child) {
+                margin-right: 0;
+            }
+        }
     }
 
     @media only screen and (max-width: 1500px) {
