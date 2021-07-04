@@ -5,4 +5,5 @@ export const StyledImageWrapper = styled.div`
     position: relative;
     z-index: 1;
     margin-right: ${props => props.theme.margin.md};
+    margin: 0 auto;
 `;

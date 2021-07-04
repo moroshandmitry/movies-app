@@ -19,4 +19,19 @@ export const StyledSimilarMoviesWrapper = styled.div`
             margin-right: ${props => props.theme.margin.md};
         }
     }
+
+    @media only screen and (max-width: 1500px) {
+        flex-direction: column;
+        gap: ${props => props.theme.padding.xl};
+    }
+
+    @media only screen and (min-width: 1000px) and (max-width: 1500px) {
+        flex-direction: column;
+        gap: ${props => props.theme.padding.xl};
+    }
+
+    @media only screen and (min-width: 400px) and (max-width: 1000px) {
+        flex-direction: column;
+        gap: ${props => props.theme.padding.xl};
+    }
 `;
