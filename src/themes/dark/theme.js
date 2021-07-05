@@ -6,11 +6,13 @@ export const theme = {
     ...commonVariables,
     ...themeVariables,
     header: {
-        background: `linear-gradient(to right, ${themeVariables.primaryColor}, ${themeVariables.secondaryColor})`,
+        // background: '#0f0c29',
+        background: `linear-gradient(to right, ${themeVariables.primaryColor}, ${themeVariables.secondaryColor}, ${themeVariables.primaryColor})`,
+
         color: '#fff'
     },
     footer: {
-        background: `linear-gradient(to right, ${themeVariables.primaryColor}, ${themeVariables.secondaryColor})`,
+        background: `linear-gradient(to right, ${themeVariables.primaryColor}, ${themeVariables.secondaryColor}, ${themeVariables.primaryColor})`,
         color: '#fff'
     },
     button: {

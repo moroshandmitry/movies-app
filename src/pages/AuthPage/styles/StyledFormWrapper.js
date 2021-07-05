@@ -9,7 +9,6 @@ export const StyledFormWrapper = styled.div`
     max-width: ${maxWidth};
     width: 100%;
     border-radius: 0.5rem;
-    box-shadow: 0 0 0.7rem 0.7rem ${props => props.theme.darkColors[800]};
 
     ${StyledForm} {
         background-color: ${props => props.theme.lightColors[600]};

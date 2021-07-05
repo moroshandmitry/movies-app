@@ -4,6 +4,7 @@ export const StyledDetails = styled.div`
     display: flex;
     flex-direction: column;
     height: 100%;
+    background-color: ${props => props.theme.darkColors[700]};
     background-image: url(${props => props.$imageUrl});
     background-size: cover;
     background-repeat: no-repeat;

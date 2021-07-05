@@ -28,13 +28,17 @@ export const Header = ({
                         disabled={isSearching}
                         type="text"
                         name="search"
-                        placeholder="Search movies"
+                        placeholder="Lucky search movies"
                         value={search}
                         onChange={onChangeSearch}
                     />
                 </StyledInputWrapper>
                 <Button disabled={isSearching} onClick={onSearchMovies}>
-                    {isSearching ? 'Searching' : 'Search'}
+                    {search === ''
+                        ? 'Lucky'
+                        : isSearching
+                        ? 'Searching'
+                        : 'Search'}
                 </Button>
             </StyledSearch>
 

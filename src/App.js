@@ -1,6 +1,7 @@
 // import { useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 // Storage (Global STATE) => Big object that contains state
 // getState => To look at the current storage => returned state
 // dispatch => to send update in store
@@ -14,32 +15,16 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
  *  (for example small reducer contain info page)
  *  (for example another small reducer contain another info page)
  */
-import { createStore, applyMiddleware, compose } from 'redux';
-import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
 
 import { Layout } from './components';
 import { LayoutContainer, MovieDetailsPageContainer } from './containers';
 import { HomePage, AuthPage } from './pages';
 import { GlobalStyles } from './styles/GlobalStyles';
 
-import { rootReducer } from './store';
 import {
     darkTheme
     // lightTheme
 } from './themes';
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const middlewares = [thunk];
-
-const store = createStore(
-    rootReducer,
-    composeEnhancers(applyMiddleware(...middlewares))
-    // for use Redux DEVTOOLS basic witout middleware
-    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
-
-console.log('[store]', store);
 
 // console.log('[Before store.getState()]', store.getState());
 
@@ -67,7 +52,31 @@ const FakePage = props => {
 //     return <Redirect to="/auth" />;
 // };
 
+const authSelector = state => !!state.auth.idToken;
+
+// const reducer = (state, action) => {
+//     const { type, payload } = action;
+//     switch (type) {
+//         case 'INCREMENT':
+//             return {
+//                 ...state,
+//                 count: state.count + 1
+//             };
+
+//         case 'DECREMENT':
+//             return {
+//                 ...state,
+//                 count: state.count - 1
+//             };
+
+//         default:
+//             return state;
+//     }
+// };
+
 export const App = () => {
+    // const [store, dispatch] = useReducer(reducer, { count: 0 });
+
     // const [theme, setTheme] = useState(darkTheme);
 
     // const handleSwitchTheme = () =>
@@ -75,54 +84,73 @@ export const App = () => {
     //         if (darkTheme) return lightTheme;
     //     });
 
+    const isAuthenticated = useSelector(authSelector);
+
+    // const handleIncrement = () => {
+    //     dispatch({ type: 'INCREMENT' });
+    // };
+    // const handleDecrement = () => {
+    //     dispatch({ type: 'DECREMENT' });
+    // };
+
     return (
-        <Provider store={store}>
-            <BrowserRouter>
-                <ThemeProvider theme={darkTheme}>
-                    {/* <span>Theme</span>{' '}
+        <BrowserRouter>
+            <ThemeProvider theme={darkTheme}>
+                {/* <span>Theme</span>{' '}
                 <button type="button" onClick={handleSwitchTheme}>
                     Switch to Light Theme
                 </button> */}
-                    <GlobalStyles />
-                    <LayoutContainer>
-                        {({ movies, ...otherProps }) => (
-                            <Layout {...otherProps}>
-                                <Switch>
-                                    {/* useHistory, useMatch, useLocation */}
+                <GlobalStyles />
+                <LayoutContainer>
+                    {({ movies, ...otherProps }) => (
+                        <Layout {...otherProps}>
+                            {/* <div>
+                                <button type="button" onClick={handleIncrement}>
+                                    +1
+                                </button>
+                                <button>{store.count}</button>
+                                <button type="button" onClick={handleDecrement}>
+                                    -1
+                                </button>
+                            </div> */}
+                            <Switch>
+                                {isAuthenticated && (
                                     <Route path={['/favorite', '/profile']}>
                                         <FakePage />
                                     </Route>
+                                )}
 
-                                    {/* <Route path="/logout">
+                                {/* <Route path="/logout">
                                         <LogoutPage />
                                     </Route> */}
 
+                                {!isAuthenticated && (
                                     <Route path="/auth">
                                         <AuthPage />
                                     </Route>
+                                )}
 
-                                    {/* movieId - is a default slug */}
-                                    {/* <Route path="/:slug" exact component={ItemPage} /> */}
-                                    {/* useHistory, useMatch, useLocation */}
-                                    <Route path="/movie/:movieId" exact>
-                                        <MovieDetailsPageContainer
-                                            movies={movies}
-                                        />
-                                    </Route>
+                                {/* movieId - is a default slug */}
+                                {/* <Route path="/:slug" exact component={ItemPage} /> */}
+                                {/* useHistory, useMatch, useLocation */}
+                                <Route path="/movie/:movieId" exact>
+                                    <MovieDetailsPageContainer
+                                        movies={movies}
+                                    />
+                                </Route>
 
-                                    {/* useHistory, useMatch, useLocation */}
-                                    <Route path="/" exact>
-                                        <HomePage movies={movies} />
-                                    </Route>
+                                {/* useHistory, useMatch, useLocation */}
+                                <Route path="/" exact>
+                                    <HomePage movies={movies} />
+                                </Route>
 
-                                    {/* Redirect all fake pages to home page */}
-                                    <Redirect to="/" />
-                                </Switch>
-                            </Layout>
-                        )}
-                    </LayoutContainer>
-                </ThemeProvider>
-            </BrowserRouter>
-        </Provider>
+                                {/* Redirect all fake pages to home page */}
+                                <Redirect to="/" />
+                            </Switch>
+                        </Layout>
+                    )}
+                </LayoutContainer>
+            </ThemeProvider>
+        </BrowserRouter>
     );
 };

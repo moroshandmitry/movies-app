@@ -23,15 +23,15 @@ const applyCursor = ({ $active }) => {
 export const StyledTab = styled.div.attrs({ role: 'button', tabIndex: 0 })`
     width: 50%;
     padding: ${props => props.theme.padding.md};
-
     text-align: center;
+    outline: 0;
 
     &:first-child {
-        border-radius: 0.5rem 0 0 0;
+        border-radius: 0.7rem 0 0 0;
     }
 
     &:last-child {
-        border-radius: 0 0.5rem 0 0;
+        border-radius: 0 0.7rem 0 0;
     }
 
     ${applyActiveStyles}

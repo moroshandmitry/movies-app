@@ -11,12 +11,45 @@ export const StyledSimilarMoviesWrapper = styled.div`
     ${StyledLink} {
         &:hover,
         &:focus {
-            outline: 0.2rem solid ${props => props.theme.secondaryColor};
+            outline: 0.3rem solid ${props => props.theme.lightColors[500]};
             outline-offset: 0.3rem;
         }
 
         &:not(:last-child) {
             margin-right: ${props => props.theme.margin.md};
         }
+
+        @media only screen and (max-width: 1500px) {
+            &:not(:last-child) {
+                margin-right: 0;
+            }
+        }
+
+        @media only screen and (min-width: 1000px) and (max-width: 1500px) {
+            &:not(:last-child) {
+                margin-right: 0;
+            }
+        }
+
+        @media only screen and (min-width: 400px) and (max-width: 1000px) {
+            &:not(:last-child) {
+                margin-right: 0;
+            }
+        }
+    }
+
+    @media only screen and (max-width: 1500px) {
+        flex-direction: column;
+        gap: ${props => props.theme.padding.xl};
+    }
+
+    @media only screen and (min-width: 1000px) and (max-width: 1500px) {
+        flex-direction: column;
+        gap: ${props => props.theme.padding.xl};
+    }
+
+    @media only screen and (min-width: 400px) and (max-width: 1000px) {
+        flex-direction: column;
+        gap: ${props => props.theme.padding.xl};
     }
 `;

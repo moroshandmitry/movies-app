@@ -21,10 +21,11 @@ import {
     StyledTabs,
     StyledTab
 } from './styles';
-
+import { useTabs } from '../../hooks';
 import { authenticateUser } from '../../store';
 
 const PASSWORD_MIN_LENGTH = 6;
+const EMAIL_REG_EXP = /^[a-zA-Z0-9._-]+@[a-z]+\.[a-z]{2,3}$/;
 
 const SIGN_IN_FIELDS = [
     {
@@ -34,7 +35,11 @@ const SIGN_IN_FIELDS = [
         name: 'email',
         placeholder: 'E-mail',
         validationRules: {
-            required: 'E-mail is required'
+            required: 'E-mail is required',
+            pattern: {
+                value: EMAIL_REG_EXP,
+                message: 'Provided value should be an e-mail adress'
+            }
         }
     },
     {
@@ -53,6 +58,77 @@ const SIGN_IN_FIELDS = [
     }
 ];
 
+const SIGN_UP_FIELDS = [
+    {
+        id: 'firstName',
+        label: 'First name',
+        type: 'text',
+        name: 'firstName',
+        placeholder: 'First name',
+        validationRules: {
+            required: 'First name is required'
+        }
+    },
+    {
+        id: 'lastName',
+        label: 'Last name',
+        type: 'text',
+        name: 'lastName',
+        placeholder: 'Last name',
+        validationRules: {
+            required: 'Last name is required'
+        }
+    },
+    {
+        id: 'email',
+        label: 'E-mail',
+        type: 'email',
+        name: 'email',
+        placeholder: 'E-mail',
+        validationRules: {
+            required: 'E-mail is required'
+        }
+    },
+    {
+        id: 'age',
+        label: 'Age',
+        type: 'number',
+        name: 'age',
+        placeholder: 'Age',
+        validationRules: {
+            required: 'Age is required',
+            pattern: {
+                value: EMAIL_REG_EXP,
+                message: 'Provided value should be an e-mail adress'
+            }
+        }
+    },
+    {
+        id: 'password',
+        label: 'Password',
+        type: 'password',
+        name: 'password',
+        placeholder: 'Password',
+        validationRules: {
+            required: 'Password is required',
+            minLength: {
+                value: PASSWORD_MIN_LENGTH,
+                message: `Password should be at least ${PASSWORD_MIN_LENGTH} characters long`
+            }
+        }
+    },
+    {
+        id: 'confirmPassword',
+        label: 'Password',
+        type: 'password',
+        name: 'confirmPassword',
+        placeholder: 'Confirm password',
+        validationRules: {
+            required: 'Confirm password is required'
+        }
+    }
+];
+
 const {
     REACT_APP_FIREBASE_API_KEY: apiKey,
     REACT_APP_FIREBASE_AUTH_URL: authUrl
@@ -67,8 +143,11 @@ export const AuthPage = () => {
             password: '123456'
         }
     });
+    const { activeTab, onSwitchTab, tabs } = useTabs();
     const isAuthenticated = useSelector(authSelector);
     const dispatch = useDispatch();
+
+    if (isAuthenticated) return <Redirect to="/" />;
 
     const onSubmit = async values => {
         const user = {
@@ -76,7 +155,10 @@ export const AuthPage = () => {
             returnSecureToken: true
         };
 
-        const url = `${authUrl}signInWithPassword?key=${apiKey}`;
+        const mode =
+            activeTab === tabs.SIGN_IN ? 'signInWithPassword' : 'signUp';
+
+        const url = `${authUrl}${mode}?key=${apiKey}`;
 
         try {
             const {
@@ -90,20 +172,31 @@ export const AuthPage = () => {
     };
     const onError = errors => console.log('[errors]', errors);
 
-    if (isAuthenticated) return <Redirect to="/" />;
+    const fields = activeTab === tabs.SIGN_IN ? SIGN_IN_FIELDS : SIGN_UP_FIELDS;
+    const legend = activeTab === tabs.SIGN_IN ? 'Sign In' : 'Sign out';
 
     return (
         <StyledWrapper>
             <StyledFormWrapper>
                 <StyledTabs>
-                    <StyledTab $active>Sign In</StyledTab>
-                    <StyledTab>Sign Out</StyledTab>
+                    <StyledTab
+                        $active={activeTab === tabs.SIGN_IN}
+                        onClick={() => onSwitchTab(tabs.SIGN_IN)}
+                    >
+                        Sign In
+                    </StyledTab>
+                    <StyledTab
+                        $active={activeTab === tabs.SIGN_UP}
+                        onClick={() => onSwitchTab(tabs.SIGN_UP)}
+                    >
+                        Sign Out{' '}
+                    </StyledTab>
                 </StyledTabs>
                 <StyledForm onSubmit={handleSubmit(onSubmit, onError)}>
                     <StyledFieldset>
-                        <StyledLegend>Sign In</StyledLegend>
+                        <StyledLegend>{legend}</StyledLegend>
 
-                        {SIGN_IN_FIELDS.map(
+                        {fields.map(
                             ({
                                 id,
                                 label,

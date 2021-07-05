@@ -7,15 +7,21 @@ const { REACT_APP_STORAGE_IMAGES_URL } = process.env;
 
 export const HomePage = ({ movies }) => (
     <StyledWrapper>
-        {movies.map(({ id, original_title, poster_path }) => {
-            const imageUrl = REACT_APP_STORAGE_IMAGES_URL + poster_path;
+        {movies
+            .filter(({ poster_path }) => poster_path !== null)
+            .map(({ id, original_title, poster_path }) => {
+                const imageUrl =
+                    REACT_APP_STORAGE_IMAGES_URL +
+                    (poster_path !== null
+                        ? poster_path
+                        : 'tzve3LD534wsCnhOrSqgJ1mnRma.jpg');
 
-            return (
-                <StyledCard key={id} $imageUrl={imageUrl}>
-                    <Link to={`/movie/${id}`}>{original_title}</Link>
-                </StyledCard>
-            );
-        })}
+                return (
+                    <StyledCard key={id} $imageUrl={imageUrl}>
+                        <Link to={`/movie/${id}`}>{original_title}</Link>
+                    </StyledCard>
+                );
+            })}
     </StyledWrapper>
 );
 
