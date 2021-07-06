@@ -15,7 +15,7 @@ const AUTHENTICATED_LINKS = [
     {
         id: 2,
         url: '/favorite',
-        title: 'Favorite movies'
+        title: 'Favorite'
     },
     {
         id: 3,

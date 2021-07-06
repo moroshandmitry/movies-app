@@ -9,4 +9,12 @@ export const StyledHeader = styled.header`
     width: 100%;
     display: flex;
     justify-content: space-evenly;
+
+    @media only screen and (min-width: 1000px) and (max-width: 1200px) {
+        padding: ${props => props.theme.padding.xs};
+    }
+
+    @media only screen and (min-width: 300px) and (max-width: 1000px) {
+        padding: ${props => props.theme.padding.xs};
+    }
 `;
