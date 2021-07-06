@@ -6,10 +6,17 @@ import { StyledWrapper, StyledCard } from './styles';
 const { REACT_APP_STORAGE_IMAGES_URL } = process.env;
 
 const StubComponent = () => (
-    <h1 style={{ color: 'white' }}>
+    <h3
+        style={{
+            color: 'white',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'start'
+        }}
+    >
         Please press the button for searching lucky movies, or write you movie
         in input and press button search.
-    </h1>
+    </h3>
 );
 
 export const HomePage = ({ movies }) => (
