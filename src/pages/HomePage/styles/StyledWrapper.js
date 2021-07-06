@@ -6,8 +6,8 @@ export const StyledWrapper = styled.div`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-auto-rows: ${cardHeight};
-    gap: ${props => props.theme.padding.xl};
-    padding: ${props => props.theme.padding.xl};
+    gap: ${props => props.theme.padding.sm};
+    padding: ${props => props.theme.padding.sm};
     grid-auto-columns: max-content;
     width: 100%;
 

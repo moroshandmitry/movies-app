@@ -5,7 +5,7 @@ export const StyledHeader = styled.header`
     color: ${props => props.theme.header.color};
     background: ${props => props.theme.header.background};
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     width: 100%;
     display: flex;
     justify-content: space-evenly;
